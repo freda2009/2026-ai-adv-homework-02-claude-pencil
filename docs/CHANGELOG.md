@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+### Fixed
+- 登入／註冊後自動合併訪客（`X-Session-Id`）購物車至使用者購物車，修正原先項目遺失問題（同商品數量相加並以庫存為上限）
+
 ### Added
 - 綠界 ECPay AIO 金流串接：結帳後導向綠界付款頁面完成真實付款流程
 - 新增 `src/utils/ecpay.js` 工具模組：CheckMacValue 簽章產生/驗證、ECPay 專用 URL 編碼、QueryTradeInfo API 查詢

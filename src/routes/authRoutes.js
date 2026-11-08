@@ -8,6 +8,39 @@ const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
 /**
+ * 將訪客（session）購物車併入使用者購物車。
+ * 同商品數量相加並以庫存為上限；失敗不影響登入流程。
+ */
+const mergeSessionCart = db.transaction((userId, sessionId) => {
+  const sessionItems = db.prepare('SELECT * FROM cart_items WHERE session_id = ? AND user_id IS NULL').all(sessionId);
+  for (const item of sessionItems) {
+    const product = db.prepare('SELECT stock FROM products WHERE id = ?').get(item.product_id);
+    if (!product || product.stock < 1) {
+      db.prepare('DELETE FROM cart_items WHERE id = ?').run(item.id);
+      continue;
+    }
+    const existing = db.prepare('SELECT * FROM cart_items WHERE user_id = ? AND product_id = ?').get(userId, item.product_id);
+    if (existing) {
+      const qty = Math.min(existing.quantity + item.quantity, product.stock);
+      db.prepare('UPDATE cart_items SET quantity = ? WHERE id = ?').run(qty, existing.id);
+      db.prepare('DELETE FROM cart_items WHERE id = ?').run(item.id);
+    } else {
+      const qty = Math.min(item.quantity, product.stock);
+      db.prepare('UPDATE cart_items SET user_id = ?, session_id = NULL, quantity = ? WHERE id = ?').run(userId, qty, item.id);
+    }
+  }
+});
+
+function safeMergeCart(userId, sessionId) {
+  if (!sessionId) return;
+  try {
+    mergeSessionCart(userId, sessionId);
+  } catch (err) {
+    console.error('合併訪客購物車失敗:', err.message);
+  }
+}
+
+/**
  * @openapi
  * /api/auth/register:
  *   post:
@@ -109,6 +142,8 @@ router.post('/register', (req, res) => {
 
   const user = db.prepare('SELECT id, email, name, role, created_at FROM users WHERE id = ?').get(id);
 
+  safeMergeCart(user.id, req.sessionId);
+
   const token = jwt.sign(
     { userId: user.id, email: user.email, role: user.role },
     process.env.JWT_SECRET,
@@ -206,6 +241,8 @@ router.post('/login', (req, res) => {
       message: 'Email 或密碼錯誤'
     });
   }
+
+  safeMergeCart(user.id, req.sessionId);
 
   const token = jwt.sign(
     { userId: user.id, email: user.email, role: user.role },

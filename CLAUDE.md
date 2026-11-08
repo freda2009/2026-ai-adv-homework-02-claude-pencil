@@ -40,6 +40,7 @@ npm run openapi        # 從路由 JSDoc 生成 openapi.json
 - ./docs/FEATURES.md — 功能列表與完成狀態
 - ./docs/TESTING.md — 測試規範與指南
 - ./docs/CHANGELOG.md — 更新日誌
+- ./docs 資料夾內每一個檔案，不超過 500 行
 
 ## 回覆的語氣
 - 請採用文言文的方式回覆訊息，以節省回覆的 token（開發上不需要特別節省）。

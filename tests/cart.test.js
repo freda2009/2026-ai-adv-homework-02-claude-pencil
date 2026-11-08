@@ -96,4 +96,55 @@ describe('Cart API', () => {
     expect(res.body).toHaveProperty('error');
     expect(res.body.error).not.toBeNull();
   });
+
+  describe('登入／註冊後合併訪客購物車', () => {
+    const { registerUser } = require('./setup');
+    const { v4: uuid } = require('uuid');
+
+    async function firstProduct() {
+      const res = await request(app).get('/api/products');
+      return res.body.data.products[0];
+    }
+
+    it('註冊後訪客購物車併入使用者購物車', async () => {
+      const sid = uuid();
+      const product = await firstProduct();
+      await request(app).post('/api/cart').set('X-Session-Id', sid).send({ productId: product.id, quantity: 2 });
+
+      const email = `merge-${Date.now()}@example.com`;
+      const reg = await request(app).post('/api/auth/register').set('X-Session-Id', sid)
+        .send({ email, password: 'password123', name: '合併測試' });
+      const token = reg.body.data.token;
+
+      const cart = await request(app).get('/api/cart').set('Authorization', `Bearer ${token}`);
+      expect(cart.body.data.items).toHaveLength(1);
+      expect(cart.body.data.items[0].quantity).toBe(2);
+
+      const sessionCart = await request(app).get('/api/cart').set('X-Session-Id', sid);
+      expect(sessionCart.body.data.items).toHaveLength(0);
+    });
+
+    it('登入時同商品數量相加', async () => {
+      const sid = uuid();
+      const product = await firstProduct();
+      const email = `merge2-${Date.now()}@example.com`;
+      const reg = await request(app).post('/api/auth/register')
+        .send({ email, password: 'password123', name: '合併測試2' });
+      await request(app).post('/api/cart').set('Authorization', `Bearer ${reg.body.data.token}`)
+        .send({ productId: product.id, quantity: 1 });
+      await request(app).post('/api/cart').set('X-Session-Id', sid).send({ productId: product.id, quantity: 2 });
+
+      const login = await request(app).post('/api/auth/login').set('X-Session-Id', sid)
+        .send({ email, password: 'password123' });
+      const cart = await request(app).get('/api/cart').set('Authorization', `Bearer ${login.body.data.token}`);
+      expect(cart.body.data.items).toHaveLength(1);
+      expect(cart.body.data.items[0].quantity).toBe(3);
+    });
+
+    it('未帶 X-Session-Id 登入不受影響', async () => {
+      const { token } = await registerUser();
+      const cart = await request(app).get('/api/cart').set('Authorization', `Bearer ${token}`);
+      expect(cart.body.data.items).toHaveLength(0);
+    });
+  });
 });
