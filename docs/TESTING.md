@@ -32,6 +32,7 @@ export default defineConfig({
         'tests/products.test.js',
         'tests/cart.test.js',
         'tests/orders.test.js',
+        'tests/ecpay.test.js',
         'tests/adminProducts.test.js',
         'tests/adminOrders.test.js',
       ],
@@ -49,6 +50,7 @@ export default defineConfig({
 | `tests/auth.test.js` | 註冊、登入、重複 email、個人資料 | 無（首先執行，建立種子資料） |
 | `tests/products.test.js` | 商品列表、分頁、詳情、404 | 依賴種子商品存在 |
 | `tests/cart.test.js` | 加入購物車、查看、更新數量、刪除、訪客 vs 登入 | 依賴商品存在 + 使用者認證 |
+| `tests/ecpay.test.js` | 綠界付款頁表單、check-payment 驗證（stub fetch） | 依賴 orders 之後執行 |
 | `tests/orders.test.js` | 建立訂單、空購物車、認證要求、訂單列表、詳情、付款 | 依賴購物車有品項 |
 | `tests/adminProducts.test.js` | 後台商品列表、新增、更新、刪除、權限檢查 | 依賴 admin 帳號 |
 | `tests/adminOrders.test.js` | 後台訂單列表、詳情、狀態篩選 | 依賴訂單存在 + admin 帳號 |

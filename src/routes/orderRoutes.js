@@ -169,6 +169,7 @@ router.post('/', (req, res) => {
     data: {
       id: order.id,
       order_no: order.order_no,
+      merchant_trade_no: order.merchant_trade_no,
       total_amount: order.total_amount,
       status: order.status,
       items: orderItems,
@@ -463,7 +464,17 @@ router.post('/:id/check-payment', async (req, res) => {
   try {
     const result = await queryTradeInfo(order.merchant_trade_no);
 
-    if (result.TradeStatus === '1') {
+    // 驗證綠界回應：簽章、交易編號、金額皆須吻合，才可標記已付款
+    if (!verifyCheckMacValue(result, ECPAY_CONFIG.hashKey, ECPAY_CONFIG.hashIV)) {
+      console.error('[ECPay] QueryTradeInfo CheckMacValue 驗證失敗');
+      return res.status(502).json({ data: null, error: 'ECPAY_QUERY_ERROR', message: '綠界回應驗證失敗' });
+    }
+
+    if (
+      result.TradeStatus === '1' &&
+      result.MerchantTradeNo === order.merchant_trade_no &&
+      Number(result.TradeAmt) === order.total_amount
+    ) {
       db.prepare('UPDATE orders SET status = ? WHERE id = ?').run('paid', order.id);
       const updated = db.prepare('SELECT * FROM orders WHERE id = ?').get(order.id);
       const items = db.prepare('SELECT product_name, product_price, quantity FROM order_items WHERE order_id = ?').all(order.id);
