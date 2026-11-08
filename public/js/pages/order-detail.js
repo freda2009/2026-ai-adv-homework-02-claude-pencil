@@ -13,16 +13,16 @@ createApp({
     const paying = ref(false);
 
     const statusMap = {
-      pending: { label: '待付款', cls: 'bg-apricot/20 text-apricot' },
-      paid: { label: '已付款', cls: 'bg-sage/20 text-sage' },
-      failed: { label: '付款失敗', cls: 'bg-red-100 text-red-600' },
+      pending: { label: '待付款', cls: 'bg-pollen text-ink' },
+      paid: { label: '已付款', cls: 'bg-ok text-white' },
+      failed: { label: '付款失敗', cls: 'bg-danger text-white' },
     };
 
     const paymentMessages = {
-      success: { text: '付款成功！感謝您的購買。', cls: 'bg-sage/10 text-sage border border-sage/20' },
-      failed: { text: '付款失敗，請重試。', cls: 'bg-red-50 text-red-600 border border-red-100' },
-      cancel: { text: '付款已取消。', cls: 'bg-apricot/10 text-apricot border border-apricot/20' },
-      pending: { text: '付款處理中，請點擊「查詢付款狀態」確認結果。', cls: 'bg-apricot/10 text-apricot border border-apricot/20' },
+      success: { text: '付款成功！感謝您的購買。', cls: 'bg-ok/10 text-ok border border-ok/30' },
+      failed: { text: '付款失敗，請重試。', cls: 'bg-danger/10 text-danger border border-danger/30' },
+      cancel: { text: '付款已取消。', cls: 'bg-pollen/30 text-ink border border-pollen' },
+      pending: { text: '付款處理中，請點擊「查詢付款狀態」確認結果。', cls: 'bg-pollen/30 text-ink border border-pollen' },
     };
 
     async function checkPayment() {

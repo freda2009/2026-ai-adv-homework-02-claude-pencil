@@ -1,26 +1,20 @@
-<header class="sticky top-0 z-50 bg-white shadow-sm border-b border-rose-bg">
-  <div class="max-w-7xl mx-auto flex items-center justify-between px-4 h-16">
-    <a href="/" class="text-xl font-bold text-rose-primary" style="font-family: 'Noto Serif TC', serif;">
-      花漾生活
+<header class="sticky top-0 z-50 bg-paper border-b border-ink">
+  <div class="page-wrap flex items-center justify-between h-[60px] md:h-[76px]">
+    <a href="/" class="flex items-center gap-2.5 font-display text-2xl md:text-[28px] text-ink">
+      <span class="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-iris"></span>花漾生活
     </a>
 
-    <nav class="flex items-center gap-6 text-sm text-text-secondary">
-      <a href="/" class="hover:text-rose-primary transition-colors">商品列表</a>
-      <a href="/cart" class="hover:text-rose-primary transition-colors relative">
+    <nav class="flex items-center gap-5 md:gap-10 text-sm md:text-[15px] text-ink">
+      <a href="/" class="hidden md:inline hover:text-iris transition-colors">商品</a>
+      <a href="/cart" class="hover:text-iris transition-colors relative">
         購物車
-        <span
-          id="cart-badge"
-          class="absolute -top-2 -right-4 bg-rose-primary text-white text-xs rounded-full w-5 h-5 items-center justify-center"
-          style="display: none;"
-        ></span>
+        <span id="cart-badge" class="absolute -top-2 -right-4 bg-pollen text-ink text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display: none;"></span>
       </a>
-      <a id="orders-link" href="/orders" class="hover:text-rose-primary transition-colors" style="display: none;">
-        我的訂單
-      </a>
+      <a id="orders-link" href="/orders" class="hover:text-iris transition-colors" style="display: none;">我的訂單</a>
     </nav>
 
     <div id="auth-nav" class="flex items-center gap-4 text-sm">
-      <a href="/login" class="bg-rose-primary text-white px-4 py-1.5 rounded-full hover:bg-rose-dark transition-colors">登入</a>
+      <a href="/login" class="bg-ink text-paper px-5 py-2 rounded hover:bg-iris transition-colors font-medium">登入</a>
     </div>
   </div>
 </header>

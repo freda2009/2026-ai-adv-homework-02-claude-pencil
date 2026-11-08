@@ -41,6 +41,27 @@ module.exports = db;
 - 測試檔案（`tests/*.test.js`）使用 CommonJS
 - 前端 JS（`public/js/`）在瀏覽器中以 `<script>` 載入，使用全域變數模式
 
+## 前台視覺規範
+
+設計稿位於 `design/storefront.pen`（以 Pencil 開啟），前台頁面須與之一致。
+
+| Token | 色碼 | Tailwind 類別 | 用途 |
+|-------|------|---------------|------|
+| ink | `#16302A` | `bg-ink` `text-ink` | 文字、深色區塊、頁尾 |
+| paper | `#ECEFE8` | `bg-paper` | 頁面底色 |
+| surface | `#F8F9F5` | `bg-surface` | 商品區、摘要面板 |
+| iris | `#5B3FA6` | `bg-iris` `.btn-primary` | 主要按鈕（每頁僅一個主動作） |
+| pollen | `#F3CE3A` | `bg-pollen` | 價格標籤、待付款狀態 |
+| ok / danger | `#2F7D4F` / `#B3261E` | `text-ok` `text-danger` | 成功、錯誤狀態 |
+
+- 標題使用 `font-display`（LXGW WenKai TC），內文使用 Noto Sans TC
+- 頁面內容容器一律用 `.page-wrap`（桌面左右 64px、手機 20px）；整幅色塊區段放在容器之外
+- 商品圖交錯使用拱形（`rounded-t-full`）與方形，避免把每個元素都包成圓角卡片
+- 表單輸入使用 `.field`（底線樣式），錯誤時加 `has-error`
+- 訂單狀態配色在 `orders.js` / `order-detail.js` 的 `statusMap` 集中管理
+- 新增前台頁面須同時在設計稿補上桌面與手機版，並確認 390px 寬度不橫向捲動
+- 後台頁面仍使用舊 token（`rose-*` 等），改動前台 token 時不可刪除它們
+
 ## 新增 API 端點步驟
 
 1. **建立或選擇路由檔案**：在 `src/routes/` 下，依功能分類

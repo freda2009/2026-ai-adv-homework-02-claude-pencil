@@ -4,6 +4,16 @@
 
 ## [Unreleased]
 
+### Changed（前台視覺改版）
+- 前台 8 個頁面（首頁、商品詳情、購物車、結帳、登入／註冊、我的訂單、訂單詳情、404）依新設計稿重做，並支援手機版（響應式）
+- 視覺方向由玫瑰粉改為「花市行情板」：墨綠 `ink`、霧紙 `paper`、鳶尾紫 `iris`（按鈕）、花粉黃 `pollen`（價格標籤）；標題字體改用 LXGW WenKai TC，內文維持 Noto Sans TC
+- `public/css/input.css` 新增色彩 token、`--font-display` 與共用元件類別（`.page-wrap`、`.btn-primary`、`.btn-outline`、`.field`）；舊有 `rose-*`、`sage` 等 token 保留給後台使用
+- `header-init.js`、`notification.js`、`orders.js`、`order-detail.js` 的狀態與提示配色改用新 token（待付款＝pollen、已付款＝ok、付款失敗＝danger）
+- 購物車免運進度條改為依小計顯示百分比；首頁 Hero「本週花況板」取自商品 API 前 4 筆
+
+### Added
+- 新增 `design/storefront.pen`（Pencil 設計稿，含桌面 1440 與手機 390 各 8 頁）與 `design/images/` 設計用商品圖片
+
 ### Fixed
 - 登入／註冊後自動合併訪客（`X-Session-Id`）購物車至使用者購物車，修正原先項目遺失問題（同商品數量相加並以庫存為上限）
 

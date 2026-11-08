@@ -1,76 +1,44 @@
 <div id="app" data-product-id="<%= productId %>">
-  <div v-if="loading" class="flex justify-center py-12">
-    <div class="w-8 h-8 border-4 border-rose-primary border-t-transparent rounded-full animate-spin"></div>
+  <div v-if="loading" class="page-wrap flex justify-center py-24"><div class="w-8 h-8 border-4 border-iris border-t-transparent rounded-full animate-spin"></div></div>
+  <div v-else-if="notFound" class="page-wrap py-24">
+    <h2 class="font-display text-4xl mb-3">找不到此商品</h2>
+    <p class="text-mute mb-6">這項商品可能已下架。</p>
+    <a href="/" class="btn-primary inline-block">回到首頁</a>
   </div>
-
-  <div v-else-if="notFound" class="text-center py-16">
-    <div class="text-5xl mb-4">&#127804;</div>
-    <h2 class="text-xl font-medium text-text-primary mb-2">找不到此商品</h2>
-    <a href="/" class="text-rose-primary hover:text-rose-dark text-sm">回到首頁</a>
-  </div>
-
-  <div v-else-if="product" class="flex flex-col md:flex-row gap-8 md:gap-12">
-    <!-- Left: Image -->
-    <div class="md:w-1/2">
-      <div class="rounded-2xl overflow-hidden shadow-sm">
-        <img
-          :src="product.image_url || 'https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=600'"
-          :alt="product.name"
-          class="w-full aspect-square object-cover"
-        />
-      </div>
+  <div v-else-if="product" class="page-wrap pt-0 md:pt-16 pb-12 md:pb-24 flex flex-col md:flex-row gap-0 md:gap-20 -mx-5 md:mx-auto">
+    <div class="md:w-[620px] md:flex-shrink-0">
+      <img
+        :src="product.image_url || 'https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=600'"
+        :alt="product.name"
+        class="w-full h-[420px] md:h-[760px] object-cover md:rounded-t-full"
+      />
     </div>
-
-    <!-- Right: Info -->
-    <div class="md:w-1/2">
-      <h1 class="text-2xl md:text-3xl font-bold text-text-primary mb-2" style="font-family: 'Noto Serif TC', serif;">
-        {{ product.name }}
-      </h1>
-      <p class="text-3xl text-rose-primary font-bold mb-4">NT$ {{ product.price.toLocaleString() }}</p>
-
-      <div class="mb-6">
-        <span class="text-sage text-sm">&#10003; 尚有 {{ product.stock }} 件</span>
+    <div class="flex-1 flex flex-col justify-center gap-5 md:gap-7 px-5 md:px-0 pt-6 md:pt-0">
+      <nav class="hidden md:block text-[13px] text-mute"><a href="/" class="hover:text-iris">首頁</a> / 所有花藝</nav>
+      <h1 class="font-display text-4xl md:text-6xl">{{ product.name }}</h1>
+      <div class="flex items-center gap-4">
+        <span class="bg-pollen text-ink text-xl md:text-2xl font-bold px-3 md:px-4 py-1.5 md:py-2 rounded-sm">NT$ {{ product.price.toLocaleString() }}</span>
+        <span v-if="product.stock > 0" class="flex items-center gap-2 text-sm text-ok"><span class="w-2 h-2 rounded-full bg-ok"></span>尚有 {{ product.stock }} 件</span>
+        <span v-else class="flex items-center gap-2 text-sm text-danger"><span class="w-2 h-2 rounded-full bg-danger"></span>已售完</span>
       </div>
-
-      <p class="text-text-secondary leading-relaxed mb-6">{{ product.description }}</p>
-
-      <!-- Quantity Selector -->
-      <div class="flex items-center gap-4 mb-6">
-        <span class="text-sm text-text-secondary">數量</span>
-        <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-          <button
-            @click="decrease"
-            class="w-10 h-10 flex items-center justify-center hover:bg-gray-50 text-text-secondary transition-colors"
-          >
-            -
-          </button>
-          <span class="w-12 h-10 flex items-center justify-center text-sm border-x border-gray-200">
-            {{ quantity }}
-          </span>
-          <button
-            @click="increase"
-            class="w-10 h-10 flex items-center justify-center hover:bg-gray-50 text-text-secondary transition-colors"
-          >
-            +
-          </button>
+      <p class="text-[15px] md:text-base leading-[1.9] text-mute">{{ product.description }}</p>
+      <div class="flex items-center gap-4">
+        <span class="text-[15px]">數量</span>
+        <div class="flex items-center border border-ink rounded overflow-hidden">
+          <button @click="decrease" aria-label="減少數量" class="w-11 h-11 hover:bg-ink hover:text-paper transition-colors">−</button>
+          <span class="w-12 h-11 flex items-center justify-center">{{ quantity }}</span>
+          <button @click="increase" aria-label="增加數量" class="w-11 h-11 hover:bg-ink hover:text-paper transition-colors">+</button>
         </div>
       </div>
-
-      <button
-        @click="addToCart"
-        :disabled="adding || product.stock <= 0"
-        class="w-full bg-rose-primary text-white py-3 rounded-full text-sm font-medium hover:bg-rose-dark transition-colors disabled:opacity-50"
-      >
+      <button @click="addToCart" :disabled="adding || product.stock <= 0" class="btn-primary w-full text-base">
         {{ product.stock <= 0 ? '已售完' : '加入購物車' }}
       </button>
-
-      <!-- Purchase Notes -->
-      <div class="mt-8 bg-blush rounded-xl p-5">
-        <h3 class="font-medium text-text-primary mb-2 text-sm">購買須知</h3>
-        <ul class="text-text-muted text-xs space-y-1.5">
-          <li>- 花材依據季節供應，實際花束可能略有差異</li>
-          <li>- 台北市區可享當日配送服務</li>
-          <li>- 消費滿 NT$ 500 享免運優惠</li>
+      <div class="border-l-2 border-ink pl-4 md:pl-5 py-1">
+        <h3 class="font-display text-base md:text-lg mb-2">購買須知</h3>
+        <ul class="text-[13px] md:text-sm text-mute space-y-2">
+          <li>花材依季節供應，實際花束可能略有差異</li>
+          <li>台北市區可享當日配送</li>
+          <li>消費滿 NT$ 500 免運</li>
         </ul>
       </div>
     </div>

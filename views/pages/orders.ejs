@@ -1,40 +1,26 @@
-<div id="app">
-  <h1 class="text-2xl font-bold text-text-primary mb-6" style="font-family: 'Noto Serif TC', serif;">我的訂單</h1>
-
-  <div v-if="loading" class="flex justify-center py-12">
-    <div class="w-8 h-8 border-4 border-rose-primary border-t-transparent rounded-full animate-spin"></div>
+<div id="app" class="page-wrap pt-7 md:pt-14 pb-12 md:pb-24">
+  <h1 class="font-display text-4xl md:text-[56px] mb-6 md:mb-8">我的訂單</h1>
+  <div v-if="loading" class="flex justify-center py-12"><div class="w-8 h-8 border-4 border-iris border-t-transparent rounded-full animate-spin"></div></div>
+  <div v-else-if="orders.length === 0" class="py-8">
+    <p class="font-display text-2xl mb-2">尚無訂單</p>
+    <p class="text-mute text-sm mb-6">下單後，訂單會顯示在這裡。</p>
+    <a href="/" class="btn-primary inline-block">去逛逛</a>
   </div>
-
-  <div v-else-if="orders.length === 0" class="text-center py-12">
-    <div class="text-4xl mb-3">&#128230;</div>
-    <p class="text-text-secondary mb-1">尚無訂單</p>
-    <p class="text-text-muted text-sm mb-4">快去選購喜歡的花束吧！</p>
-    <a href="/" class="inline-block bg-rose-primary text-white px-6 py-2 rounded-full text-sm hover:bg-rose-dark transition-colors">去逛逛</a>
-  </div>
-
-  <div v-else class="space-y-4">
-    <a
-      v-for="order in orders"
-      :key="order.id"
-      :href="'/orders/' + order.id"
-      class="block bg-white rounded-2xl shadow-sm p-5 hover:shadow-md transition-shadow"
-    >
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm text-text-secondary">訂單編號：{{ order.order_no }}</p>
-          <p class="text-xs text-text-muted mt-1">{{ new Date(order.created_at).toLocaleDateString('zh-TW') }}</p>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="font-bold text-text-primary">NT$ {{ order.total_amount.toLocaleString() }}</span>
-          <span
-            class="text-xs px-3 py-1 rounded-full font-medium"
-            :class="statusMap[order.status]?.cls || 'bg-gray-100 text-gray-600'"
-          >
-            {{ statusMap[order.status]?.label || order.status }}
-          </span>
-          <span class="text-text-muted">&#8594;</span>
-        </div>
-      </div>
+  <div v-else>
+    <div class="hidden md:flex text-[13px] text-mute pb-3 border-b-2 border-ink">
+      <span class="w-[460px]">訂單編號</span><span class="w-[300px]">建立日期</span><span class="w-[220px]">狀態</span><span class="flex-1 text-right">金額</span>
+    </div>
+    <a v-for="order in orders" :key="order.id" :href="'/orders/' + order.id"
+       class="grid grid-cols-[1fr_auto] items-center md:flex gap-2 md:gap-0 py-4 md:py-[22px] border-b border-line hover:bg-surface transition-colors">
+      <span class="md:w-[460px] font-medium text-[15px] md:text-lg">{{ order.order_no }}</span>
+      <span class="hidden md:block w-[300px] text-[15px] text-mute">{{ new Date(order.created_at).toLocaleDateString('zh-TW') }}</span>
+      <span class="md:w-[220px]">
+        <span class="text-xs md:text-[13px] font-medium px-3 py-1 rounded-sm" :class="statusMap[order.status]?.cls || 'bg-line text-ink'">{{ statusMap[order.status]?.label || order.status }}</span>
+      </span>
+      <span class="col-span-2 flex-1 flex items-center justify-between md:justify-end gap-4">
+        <span class="md:hidden text-[13px] text-mute">{{ new Date(order.created_at).toLocaleDateString('zh-TW') }}</span>
+        <span class="font-display text-lg md:text-[22px]">NT$ {{ order.total_amount.toLocaleString() }}</span>
+      </span>
     </a>
   </div>
 </div>

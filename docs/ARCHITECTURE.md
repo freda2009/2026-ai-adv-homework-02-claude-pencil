@@ -31,12 +31,16 @@
 │       ├── adminOrderRoutes.js     # 後台訂單路由：列表（含狀態篩選）、詳情（需 JWT + admin）
 │       └── pageRoutes.js           # 頁面路由：渲染 EJS 模板（無認證）+ 綠界付款表單頁
 │
+├── design/
+│   ├── storefront.pen              # Pencil 設計稿（前台桌面 + 手機版，須用 Pencil 開啟）
+│   └── images/                     # 設計稿使用的商品圖片
+│
 ├── views/
 │   ├── layouts/
 │   │   ├── front.ejs               # 前台佈局包裹器（head + header + body + footer + pageScript）
 │   │   └── admin.ejs               # 後台佈局包裹器（head + admin-header + sidebar + body）
 │   ├── pages/
-│   │   ├── index.ejs               # 首頁（商品卡片列表）
+│   │   ├── index.ejs               # 首頁（Hero 花況板、商品列表、品牌故事）
 │   │   ├── product-detail.ejs      # 商品詳情頁
 │   │   ├── cart.ejs                # 購物車頁面
 │   │   ├── checkout.ejs            # 結帳頁面
@@ -57,7 +61,7 @@
 │
 ├── public/
 │   ├── css/
-│   │   ├── input.css               # Tailwind CSS 輸入檔
+│   │   ├── input.css               # Tailwind CSS 輸入檔（含前台色彩 token 與共用元件類別）
 │   │   └── output.css              # 編譯後的 CSS
 │   ├── stylesheets/
 │   │   └── style.css               # 額外自訂樣式
