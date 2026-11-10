@@ -40,6 +40,25 @@ coverage/
 public/css/output.css
 qa.md
 
+# Windows 下載標記（WSL 複製檔案時產生）
+*:Zone.Identifier
+
+# Claude Code 沙箱遮蔽掛載點（字元裝置 /dev/null，非專案檔案）
+/.bash_profile
+/.bashrc
+/.profile
+/.zprofile
+/.zshrc
+/.gitconfig
+/.ripgreprc
+/.idea
+/.vscode
+/.claude/launch.json
+/.claude/loop.md
+/.claude/scheduled_tasks.json
+/.claude/routines
+/.claude/workflows
+
 # E2E 錄影與截圖（e2e-ecpay-webatm skill 產物）
 tests/e2e-records/
 tests/videos/
