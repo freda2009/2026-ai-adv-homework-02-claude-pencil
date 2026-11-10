@@ -248,3 +248,14 @@ it('should work with session ID', async () => {
 - 不需要管理埠號衝突
 - 不會觸發 `server.js` 中的 `app.listen()`
 - `database.js` 在 `require('../app')` 時即初始化（建表 + 種子資料）
+
+## E2E 測試（綠界 WebATM 結帳）
+
+E2E 不屬 vitest，由專案 skill `e2e-ecpay-webatm`（`.claude/skills/e2e-ecpay-webatm/`）經 Playwright MCP 執行：
+
+- 流程：登入 admin → 加入購物車 → 結帳 → 綠界網路ATM → 台灣土地銀行 → 驗證訂單「已付款」
+- 前置：伺服器須於沙箱外啟動（`npm run start`），並已安裝 Chrome（`npx playwright install chrome`）
+- 產物：`tests/e2e-records/YYYY-MM-DD-HH-mm-ecpay-webatm.webm` 與 `.png`（已列入 `.gitignore`）
+- 流程腳本 `flow.js` 位於 `.claude/` 下，不會被 `npm run test` 收入
+- 每次執行新增一筆已付款訂單並扣庫存，不自動清理
+- 固定購買「迷你多肉組合盆」而非第一件商品，以免與 vitest（取 `products[0]`）爭用庫存
