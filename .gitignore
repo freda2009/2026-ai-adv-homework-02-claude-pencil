@@ -63,7 +63,7 @@ qa.md
 /.claude/hooks
 /.claude/output-styles
 
-# E2E 錄影與截圖（e2e-ecpay-webatm skill 產物）
+# E2E 錄影與截圖（e2e-payment-test skill 產物）
 tests/e2e-records/
 tests/videos/
 .playwright-mcp/

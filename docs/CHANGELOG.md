@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Changed（目錄整理）
+- 設計稿目錄由 `design/` 移至 `docs/design/`（`storefront.pen` 與 `images/`）
+- E2E skill 由 `e2e-ecpay-webatm` 更名為 `e2e-payment-test`（`.claude/skills/e2e-payment-test/`）
+
 ### Changed（前台視覺改版）
 - 前台 8 個頁面（首頁、商品詳情、購物車、結帳、登入／註冊、我的訂單、訂單詳情、404）依新設計稿重做，並支援手機版（響應式）
 - 視覺方向由玫瑰粉改為「花市行情板」：墨綠 `ink`、霧紙 `paper`、鳶尾紫 `iris`（按鈕）、花粉黃 `pollen`（價格標籤）；標題字體改用 LXGW WenKai TC，內文維持 Noto Sans TC

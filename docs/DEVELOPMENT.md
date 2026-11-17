@@ -43,7 +43,7 @@ module.exports = db;
 
 ## 前台視覺規範
 
-設計稿位於 `design/storefront.pen`（以 Pencil 開啟），前台頁面須與之一致。
+設計稿位於 `docs/design/storefront.pen`（以 Pencil 開啟），前台頁面須與之一致。
 
 | Token | 色碼 | Tailwind 類別 | 用途 |
 |-------|------|---------------|------|

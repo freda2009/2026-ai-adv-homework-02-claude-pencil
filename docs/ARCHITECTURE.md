@@ -31,9 +31,11 @@
 │       ├── adminOrderRoutes.js     # 後台訂單路由：列表（含狀態篩選）、詳情（需 JWT + admin）
 │       └── pageRoutes.js           # 頁面路由：渲染 EJS 模板（無認證）+ 綠界付款表單頁
 │
-├── design/
-│   ├── storefront.pen              # Pencil 設計稿（前台桌面 + 手機版，須用 Pencil 開啟）
-│   └── images/                     # 設計稿使用的商品圖片
+├── docs/                           # 專案文件（ARCHITECTURE、DEVELOPMENT、TESTING 等）
+│   ├── plans/                      # 功能開發計畫（完成後移至 plans/archive/）
+│   └── design/
+│       ├── storefront.pen          # Pencil 設計稿（前台桌面 + 手機版，須用 Pencil 開啟）
+│       └── images/                 # 設計稿使用的商品圖片
 │
 ├── views/
 │   ├── layouts/

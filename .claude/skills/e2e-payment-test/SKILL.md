@@ -1,5 +1,5 @@
 ---
-name: e2e-ecpay-webatm
+name: e2e-payment-test
 description: 以 Playwright MCP 執行花卉電商「登入 → 加入購物車 → 結帳 → 綠界網路ATM（台灣土地銀行）→ 訂單已付款」E2E 測試，全程錄影並於結束時截圖，存至 tests/e2e-records/，檔名帶 YYYY-MM-DD-HH-mm。當使用者要求跑 E2E、綠界結帳測試、WebATM／土地銀行付款測試、錄影測試結帳流程時使用。
 ---
 
@@ -31,7 +31,7 @@ ToolSearch: select:mcp__playwright__browser_navigate,mcp__playwright__browser_ru
 
 ```
 mcp__playwright__browser_run_code_unsafe
-  filename: .claude/skills/e2e-ecpay-webatm/flow.js
+  filename: .claude/skills/e2e-payment-test/flow.js
 ```
 
 腳本會自建一個錄影用的 browser context，依序：

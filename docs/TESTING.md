@@ -251,7 +251,7 @@ it('should work with session ID', async () => {
 
 ## E2E 測試（綠界 WebATM 結帳）
 
-E2E 不屬 vitest，由專案 skill `e2e-ecpay-webatm`（`.claude/skills/e2e-ecpay-webatm/`）經 Playwright MCP 執行：
+E2E 不屬 vitest，由專案 skill `e2e-payment-test`（`.claude/skills/e2e-payment-test/`）經 Playwright MCP 執行：
 
 - 流程：登入 admin → 加入購物車 → 結帳 → 綠界網路ATM → 台灣土地銀行 → 驗證訂單「已付款」
 - 前置：伺服器須於沙箱外啟動（`npm run start`），並已安裝 Chrome（`npx playwright install chrome`）
