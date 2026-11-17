@@ -58,6 +58,10 @@ qa.md
 /.claude/scheduled_tasks.json
 /.claude/routines
 /.claude/workflows
+/.claude/agents
+/.claude/commands
+/.claude/hooks
+/.claude/output-styles
 
 # E2E 錄影與截圖（e2e-ecpay-webatm skill 產物）
 tests/e2e-records/
